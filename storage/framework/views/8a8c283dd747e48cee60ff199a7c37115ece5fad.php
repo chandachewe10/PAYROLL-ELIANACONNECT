@@ -41,7 +41,7 @@
              <td><?php echo e($employee->phone); ?></td>
              <td><?php echo e($employee->email); ?></td>
              <td><?php echo e($employee->position->title); ?></td>
-             <td><?php echo QrCode::size(50)->generate(Request::url()); ?></td>
+             <td><?php echo QrCode::size(50)->generate(config('app.url')."/employee_attendance/$employee->id/$employee->security_number"); ?></td>
              <td>
                <div class=''>
                 <b>Gender :</b> <span><?php echo e($employee->gender); ?></span></br>

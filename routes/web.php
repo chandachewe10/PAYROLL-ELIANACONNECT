@@ -533,13 +533,6 @@ Route::group(['middleware'=>'onlyForEmployees'], function () {
     Route::get('/overtime_details_view', [App\Http\Controllers\Employees\Overtime::class,'overtime_details_view'])->name('employees.overtime_details_view');
     Route::post('/overtime_details_submit', [App\Http\Controllers\Employees\Overtime::class,'overtime_details_submit'])->name('employees.overtime_details_submit');
 
-  //Attendance Controller For Employees
-Route::get('/employee_attendance_in_view', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'sign_in'])->name('employees.sign_in');
-Route::post('/employee_attendance_submit', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'sign_in_submit'])->name('employees.sign_in_submit');
-
-Route::get('/employee_attendance_out_view', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'sign_out'])->name('employees.sign_out');
-Route::post('/employee_attendance_in_view', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'sign_out_submit'])->name('employees.sign_out_submit');
-
 
 
  //Employee Change password
@@ -588,10 +581,14 @@ Route::get('/airtel', [App\Http\Controllers\Payments\Payments::class,'airtel'])-
 
 // zamtel
 Route::get('/zamtel', [App\Http\Controllers\Payments\Payments::class,'zamtel'])->name('payments.zamtel');
-
-
-
-
     
 
 });
+
+
+
+
+  //Attendance Controller For Employees
+  Route::get('/employee_attendance/{id}/{company_id}', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'attendance']);
+  
+  

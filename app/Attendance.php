@@ -33,13 +33,6 @@ class Attendance extends Model
     }
 
   
-   public function setTimeInAttribute($value){
-        $this->attributes['time_in'] = date('H:i:s', strtotime($value));
-    }
-
-    public function setTimeOutAttribute($value){
-        $this->attributes['time_out'] = date('H:i:s', strtotime($value));
-    }
   
   
   
