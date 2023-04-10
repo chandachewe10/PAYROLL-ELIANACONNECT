@@ -21,7 +21,6 @@
               <th>Phone</th>
               <th>Email</th>
               <th>Position</th>
-              <th>QR-Code</th>
               <th>Details</th>
               <th>Payroll</th>
               <th>Application</th>
@@ -41,7 +40,7 @@
              <td>{{ $employee->phone }}</td>
              <td>{{ $employee->email }}</td>
              <td>{{ $employee->position->title }}</td>
-             <td>{!! QrCode::size(50)->generate(config('app.url')."/employee_attendance/$employee->id/$employee->security_number"); !!}</td>
+             
              <td>
                <div class=''>
                 <b>Gender :</b> <span>{{$employee->gender}}</span></br>

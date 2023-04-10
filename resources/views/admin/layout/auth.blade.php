@@ -28,7 +28,7 @@
     </head>
 
     <body>
-        
+    @include('sweetalert::alert')    
         <div class="auth-wrapper">
             <div class="container-fluid h-100">
                 <div class="row flex-row h-100 bg-white">

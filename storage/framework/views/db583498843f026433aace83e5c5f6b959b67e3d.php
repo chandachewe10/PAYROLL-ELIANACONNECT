@@ -12,7 +12,8 @@
   <div class="row align-items-end">
    <div class="col-lg-8">
     <div class="page-header-title">
-     <i class="ik ik-bar-chart bg-blue"></i>
+    <?php echo QrCode::size(50)->generate(config('app.url')."/employee_attendance/Auth::user()->security_number"); ?>
+
      <div class="d-inline">
       <h5>Dashboard</h5>
      
@@ -43,6 +44,7 @@
 <h4>Setup Summary</h4>
 <small style="font-style:italic">All your setup of your payroll system will appear here</small>
 <p style="font-style:italic">Company ID: <strong><?php echo e(Auth::user()->security_number); ?></strong></p> 
+
 <?php if($errors->any()): ?>
                         <div class="alert <?php echo e(session()->get('bgcolor')); ?> text-light alert-dismissible fade show" role="alert">
                             <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

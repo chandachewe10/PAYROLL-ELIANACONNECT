@@ -32,41 +32,18 @@
     </div>
     @endif
 
-    <form action="{{ route('employee.login') }}" method="post">
+    <form action="{{ route('qrcode_attendance') }}" method="post">
         @method('POST')
         @csrf
         <div class="form-group">
             <input type="email" name="email" class="form-control" placeholder="Email" required="">
             <i class="ik ik-user"></i>
         </div>
-        <div class="form-group">
-            <input type="number" name="security_number" class="form-control" placeholder="Company ID" required="">
-            <i class="ik ik-user"></i>
-        </div>
-        <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Password" required="">
-            <i class="ik ik-lock"></i>
-        </div>
-        <input type="hidden" name="status" value="0" class="form-control" >
-        <div class="row">
-            <div class="col text-left">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="item_checkbox" name="remember_token" value="option1">
-                    <span class="custom-control-label">&nbsp;Remember Me</span>
-                </label>
-            </div>
-<!--
-            <div class="col text-right">
-            @if (Route::has('password.request'))
-<a class="btn btn-link" href="javascript:void()">
-    {{ __('Forgot Your Password? See your HR') }}
-</a>
-@endif
-            </div>
--->
+       
+
         </div>
         <div class="sign-btn text-center">
-            <button class="btn btn-theme" type="submit">Sign In</button>
+            <button class="btn btn-theme" type="submit">Submit</button>
         </div>
     </form>
 </div>

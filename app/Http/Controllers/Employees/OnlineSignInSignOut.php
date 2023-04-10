@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\{Attendance,Employee};
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
@@ -13,21 +14,55 @@ use Carbon\Carbon;
 
 class OnlineSignInSignOut extends Controller
 {
-    public function attendance($company_id)
+
+    public function qr_attendance_view()
     {
+        
+       return view('qrcode.index');
+    }
+
+
+    public function attendance(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+			'email' => 'required|exists:admins',
+			'password' => 'required'
+		],
+		[
+			'email.exists' => "Email does not exist.",
+			'email.required' => 'The Email is required.',
+			'email.email' => 'Please enter valid email.',
+		]);
+		
+		if($validate->fails()){
+			return Redirect()->back()->with([
+								'status'=>false,
+								'errors'=>$validate->errors()
+							]);
+		}
+
        
        $time_in = gmdate('H:i:s', strtotime('+ 2 hours'));
        $time_out =gmdate('H:i:s', strtotime('+ 2 hours'));
        $date = date('Y-m-d');
+ 
+ //
+ $email = $request->email;
        
-       
+// Company ID 
+$company_id = Employee::where('email',"=",$email)->first()->security_number;
+
+// Employee ID number
+$id =  Employee::where('email',"=",$email)->first()->id;  
+
+
   //Configured Check In Time
         
-        $standard_time_in_configured = Employee::find($id)->schedule;
+        $standard_time_in_configured = Employee::where('email',"=",$email)->schedule;
         $normal_log_in_time = Carbon::createFromTimeString($standard_time_in_configured->time_in);
 
 //Configured Check Out Time
-        $standard_time_out_configured = Employee::find($id)->schedule;
+        $standard_time_out_configured = Employee::where('email',"=",$email)->schedule;
         $normal_log_out_time = Carbon::createFromTimeString($standard_time_in_configured->time_out);
 
 
@@ -59,9 +94,11 @@ class OnlineSignInSignOut extends Controller
                 'employee_id' => $id,
                 'ontime_status' => $ontime_status
                 ]);
-                return 'You have checked in Successfully at '.$time_in .'on '.$date;
-               // Alert::success('Checked In','You have checked in Successfully at '.$time_in .'on '.$date );
-               // return redirect('/login_view');
+               
+                Alert::success('CHECKED-IN', 'You have checked in Successfully at '.$time_in .'on '.$date); 
+                return redirect()->back();
+
+
         }
 elseif ($check_out) {
             $check_out = Attendance::whereDate('date', "=", $date)->latest()->first();
@@ -70,17 +107,15 @@ elseif ($check_out) {
             $check_out->security_number = $company_id;
             $check_out->employee_id = $id;
             $check_out->save();
-
-            return 'You have checked out Successfully at '.$time_out .'on '.$date;
-           // Alert::success('Checked Out','You have checked out Successfully at '.$time_out .'on '.$date );
-            //return redirect('/login_view');
+            Alert::success('CHECKED-OUT', 'You have checked out Successfully at '.$time_in .'on '.$date); 
+            return redirect()->back();
+          
 
         }
 
         else{
-            return 'You have already checked out for today'; 
-           // Alert::error('Checked Out Already','You have already checked out for today');
-            // return redirect('/login_view');
+            Alert::success('INVALID', 'You have already checked out for today'); 
+            return redirect()->back();
         }
     }
 }
