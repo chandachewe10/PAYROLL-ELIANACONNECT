@@ -588,7 +588,11 @@ Route::get('/zamtel', [App\Http\Controllers\Payments\Payments::class,'zamtel'])-
 
 
 
-  //Attendance Controller For Employees
-  Route::get('/employee_attendance/{id}/{company_id}', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'attendance']);
+  //Attendance Controller View For Employees
+  Route::get('/employee_attendance/{company_id}', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'qrcode_attendance_view']);
+  
+  
+  //Attendance Controller Store For Employees
+  Route::post('/employee_attendance', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'attendance']);
   
   

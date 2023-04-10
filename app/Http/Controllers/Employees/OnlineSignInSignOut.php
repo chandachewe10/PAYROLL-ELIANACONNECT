@@ -13,7 +13,7 @@ use Carbon\Carbon;
 
 class OnlineSignInSignOut extends Controller
 {
-    public function attendance($id,$company_id)
+    public function attendance($company_id)
     {
        
        $time_in = gmdate('H:i:s', strtotime('+ 2 hours'));
