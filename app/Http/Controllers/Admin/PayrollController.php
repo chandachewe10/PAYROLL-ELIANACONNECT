@@ -185,19 +185,6 @@ foreach ($payslips as $payslip) {
 
 
 
-if($total_hours_worked < -1000) {
-  $basic_pay = ($total_hours_worked * $payslip->rate_per_hour);
-  $gross_earnings = ($basic_pay) + $housing_allowance + $transport_allowance + $total_overtime_amount;
-}
-
-else{
-
-  $gross_earnings = ($payslip->salary) + $housing_allowance + $transport_allowance + $total_overtime_amount;
-}
-
- 
-  
-  
          
 
 $bonus_amount = 0;
@@ -215,9 +202,7 @@ $achievements_name = " ";
               $bonus_amount = $bonus_value * $payslip->salary;  
             }
 
-            if($bonus_applicable_on === 'GROSS PAY'){
-                $bonus_amount = $bonus_value * $gross_earnings;     
-            }
+           
             
         }
 
@@ -231,14 +216,21 @@ $achievements_name = " ";
                 $achievements_amount = $achievements_value * $payslip->salary;  
             }
 
-            if($achievements_applicable_on === 'GROSS PAY'){
-                $achievements_amount = $achievements_value * $gross_earnings;     
-            }
-            
+          
         }
   
   
-  
+        if($total_hours_worked < -1000) {
+            $basic_pay = ($total_hours_worked * $payslip->rate_per_hour);
+            $gross_earnings = $achievements_amount + $bonus_amount + ($payslip->salary) + $housing_allowance + $transport_allowance + $total_overtime_amount;
+          }
+          
+          else{
+          
+            $gross_earnings = $achievements_amount + $bonus_amount + ($payslip->salary) + $housing_allowance + $transport_allowance + $total_overtime_amount;
+          }
+          
+           
   
         
 
