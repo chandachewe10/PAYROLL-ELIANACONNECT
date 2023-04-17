@@ -163,6 +163,18 @@ Route::group(['namespace'=>'Admin','as'=>'admin.'], function () {
         Route::get('/export_csv_employee', [App\Http\Controllers\TestingMaatWebExcel::class, 'export_csv_employee'])->name('employee.export_csv_employee');
         Route::get('/export_excel_employee', [App\Http\Controllers\TestingMaatWebExcel::class, 'export_excel_employee'])->name('employee.export_excel_employee');
 
+// Pricing For Employee
+
+Route::resource('employee', 'PricingController');
+
+
+
+
+
+
+
+
+
 
         Route::get('/deleted_employees', "DeletedEmployeeController@index")->name('employee.deleted_employees');
         Route::post('getdata_deleted/employee', "DeletedEmployeeController@getData")->name('employee.getDataTrashed');
@@ -589,7 +601,7 @@ Route::get('/zamtel', [App\Http\Controllers\Payments\Payments::class,'zamtel'])-
 
 
   //Attendance Controller View For Employees
-  Route::get('/employee_attendance/{company_id}', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'qrcode_attendance_view']);
+  Route::get('/employee_attendance', [App\Http\Controllers\Employees\OnlineSignInSignOut::class,'qr_attendance_view']);
   
   
   //Attendance Controller Store For Employees

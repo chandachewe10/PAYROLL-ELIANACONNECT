@@ -19,7 +19,7 @@
 </center>
 <hr>
     <h3>Sign In - Sign Out</h3>
-    <p>Employee Portal</p>
+    <p>Enter Email</p>
 
     @if($errors->any())
     <div class="alert bg-danger text-light alert-dismissible fade show" role="alert">

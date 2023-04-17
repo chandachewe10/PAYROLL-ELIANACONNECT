@@ -14,7 +14,7 @@
   <div class="row align-items-end">
    <div class="col-lg-8">
     <div class="page-header-title">
-    {!! QrCode::size(50)->generate(config('app.url')."/employee_attendance/Auth::user()->security_number"); !!}
+    {!! QrCode::size(50)->generate(config('app.url')."/employee_attendance"); !!}
      <div class="d-inline">
       <h5>Dashboard</h5>
      

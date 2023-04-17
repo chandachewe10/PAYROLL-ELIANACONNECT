@@ -24,9 +24,10 @@ class OnlineSignInSignOut extends Controller
 
     public function attendance(Request $request)
     {
+        
         $validate = Validator::make($request->all(), [
-			'email' => 'required|exists:admins',
-			'password' => 'required'
+			'email' => 'required|exists:employees'
+			
 		],
 		[
 			'email.exists' => "Email does not exist.",
@@ -58,11 +59,11 @@ $id =  Employee::where('email',"=",$email)->first()->id;
 
   //Configured Check In Time
         
-        $standard_time_in_configured = Employee::where('email',"=",$email)->schedule;
+        $standard_time_in_configured = Employee::where('email',"=",$email)->first()->schedule;
         $normal_log_in_time = Carbon::createFromTimeString($standard_time_in_configured->time_in);
 
 //Configured Check Out Time
-        $standard_time_out_configured = Employee::where('email',"=",$email)->schedule;
+        $standard_time_out_configured = Employee::where('email',"=",$email)->first()->schedule;
         $normal_log_out_time = Carbon::createFromTimeString($standard_time_in_configured->time_out);
 
 
@@ -73,20 +74,18 @@ $id =  Employee::where('email',"=",$email)->first()->id;
             $ontime_status = 0;
         }
 
-        //Check if User has already signed In
+        //if User has not Checked In
         $check_login = Attendance::whereDate('date', "=", $date)
         ->where('security_number', "=", $company_id)
-        ->where('employee_id', "=", $id)->whereNull('time_in')
-        ->exists();
+        ->where('employee_id', "=", $id)->first();
 
-        //Check if User has already signed Out
+        //if User has not Checked Out
         $check_out = Attendance::whereDate('date', "=", $date)
         ->where('security_number', "=", $company_id)
-        ->where('employee_id', "=", $id)->whereNull('time_out')
-        ->exists();
+        ->where('employee_id', "=", $id)->first();
 
-       
-        if($check_login) {
+     
+        if(empty($check_login->time_in ?? '')) {
             Attendance::create([
                 'date' => $date,
                 'time_in' => Carbon::createFromTimeString($time_in)->lte($normal_log_in_time) ? $standard_time_in_configured->time_in : $time_in,
@@ -100,8 +99,9 @@ $id =  Employee::where('email',"=",$email)->first()->id;
 
 
         }
-elseif ($check_out) {
-            $check_out = Attendance::whereDate('date', "=", $date)->latest()->first();
+elseif (empty($check_out->time_out  ?? '' )) {
+            $check_out = Attendance::whereDate('date', "=", $date)->where('security_number', "=", $company_id)
+            ->where('employee_id', "=", $id)->latest()->first();
             $check_out->date = $date;
             $check_out->time_out = Carbon::createFromTimeString($time_out)->gte($normal_log_out_time) ? $standard_time_out_configured->time_out : $time_out;
             $check_out->security_number = $company_id;
@@ -113,8 +113,12 @@ elseif ($check_out) {
 
         }
 
-        else{
-            Alert::success('INVALID', 'You have already checked out for today'); 
+        elseif ($check_login) {
+            Alert::error('ALREADY CHECKED IN', 'You have already checked in for today'); 
+            return redirect()->back();
+        }
+        else {
+            Alert::error('ALREADY CHECKED OUT', 'You have already checked out for today'); 
             return redirect()->back();
         }
     }
