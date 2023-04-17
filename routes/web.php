@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\Auth\AgentsAuth\AgentsAuth;
+use App\Http\Controllers\PricingController;
+
 /*application configration routes*/
 /*
 Route::group(['prefix'=>'clear'],function(){
@@ -163,9 +165,10 @@ Route::group(['namespace'=>'Admin','as'=>'admin.'], function () {
         Route::get('/export_csv_employee', [App\Http\Controllers\TestingMaatWebExcel::class, 'export_csv_employee'])->name('employee.export_csv_employee');
         Route::get('/export_excel_employee', [App\Http\Controllers\TestingMaatWebExcel::class, 'export_excel_employee'])->name('employee.export_excel_employee');
 
-// Pricing For Employee
 
-Route::resource('employee', 'PricingController');
+
+
+       
 
 
 
@@ -396,6 +399,12 @@ Route::resource('employee', 'PricingController');
 
 
 Auth::routes(['verify' => true]);
+
+
+ // Pricing For Employer
+ Route::resource('pricing_plan', PricingController::class);
+
+
 
 // Dashboard Routes
 Route::get("/dashboard", 'Admin\DashboardController@dashboard')

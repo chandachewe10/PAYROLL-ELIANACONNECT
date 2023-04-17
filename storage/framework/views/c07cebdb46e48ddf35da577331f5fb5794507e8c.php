@@ -8,10 +8,10 @@
   <title>GET STARTED::HR PAYROLL MANAGEMENT SYSTEM</title>
   <meta name="description" content="This is the cloud based  Payroll Management System developed by Eliana Connect which is an integral part of any business and it is an important HR / accounting  function that needs to be handled with the utmost caution and confidentiality.  The main functions of this payroll system will be to run the payroll for all employees and compile their payslips in PDF Formats." />
 <meta name="author" content="https://elianaconnect.com" />
-  <link rel="stylesheet" href="{{asset('landing_page/css/style.css')}}">
+  <link rel="stylesheet" href="<?php echo e(asset('landing_page/css/style.css')); ?>">
   <!-- Favicons -->
-  <link href="{{asset('landing_assets/img/fav.PNG')}}" rel="icon">
-  <link href="{{asset('landing_assets/img/apple-touch-icon.PNG')}}" rel="apple-touch-icon">
+  <link href="<?php echo e(asset('landing_assets/img/fav.PNG')); ?>" rel="icon">
+  <link href="<?php echo e(asset('landing_assets/img/apple-touch-icon.PNG')); ?>" rel="apple-touch-icon">
 </head>
 <body>
 
@@ -130,7 +130,7 @@
         }   
 </style>
 
-@include('sweetalert::alert')
+<?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
   <div class="js-animsition animsition" id="site-wrap" data-animsition-in-class="fade-in" data-animsition-out-class="fade-out">
 
     <header class="templateux-navbar" role="banner">
@@ -139,7 +139,7 @@
         <div class="row">
 
           <div class="col-1 templateux-logo">
-             <img src="{{asset('landing_assets/img/logo1.PNG')}}" alt="E-SYSTEMS" class="img-fluid" style="width:80px; height:80px; border-radius:100%">
+             <img src="<?php echo e(asset('landing_assets/img/logo1.PNG')); ?>" alt="E-SYSTEMS" class="img-fluid" style="width:80px; height:80px; border-radius:100%">
           </div>
           <nav class="col-11 site-nav">
             <button class="d-block d-md-none hamburger hamburger--spin templateux-toggle templateux-toggle-light ml-auto templateux-toggle-menu" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,33 +154,33 @@
               </li>
              
               <li class="active">
-                <a href="{{route('register')}}" class="animsition-link">Get Started</a>
+                <a href="<?php echo e(route('register')); ?>" class="animsition-link">Get Started</a>
               </li>
 
               <li class="active">
-                <a href="{{route('pricing')}}" class="animsition-link">Pricing</a>
+                <a href="<?php echo e(route('pricing')); ?>" class="animsition-link">Pricing</a>
               </li>
 			  <li class="active">
-                <a href="{{route('login')}}" class="animsition-link">Employer Login</a>
+                <a href="<?php echo e(route('login')); ?>" class="animsition-link">Employer Login</a>
               </li>
 			  <li class="active">
-                <a href="{{'login_view'}}" class="animsition-link">Employee Login</a>
+                <a href="<?php echo e('login_view'); ?>" class="animsition-link">Employee Login</a>
               </li>
               
              
               </li>
                 <li class="active">
-                <a href="{{'agents_login_view'}}" class="animsition-link">Agent Login</a>
+                <a href="<?php echo e('agents_login_view'); ?>" class="animsition-link">Agent Login</a>
               </li>
               
             <!--
                 <li class="active">
-                <a href="{{'agents_register_view'}}" class="animsition-link">Agent Registration</a>
+                <a href="<?php echo e('agents_register_view'); ?>" class="animsition-link">Agent Registration</a>
               </li>
              -->
              
               
-              <li><a href="{{'contact_us'}}" class="animsition-link">Contact</a></li>
+              <li><a href="<?php echo e('contact_us'); ?>" class="animsition-link">Contact</a></li>
             </ul> <!-- .templateux-menu -->
 
           </nav> <!-- .site-nav -->
@@ -190,7 +190,7 @@
       </div> <!-- .container -->
     </header> <!-- .templateux-navba -->
     
-    <div class="templateux-cover" style="background-image: url({{asset('landing_page/images/hero_1.jpg')}})">
+    <div class="templateux-cover" style="background-image: url(<?php echo e(asset('landing_page/images/hero_1.jpg')); ?>)">
       <div class="container">
         <div class="row align-items-lg-center">
 
@@ -231,7 +231,7 @@
                         <li>Employee self on-boarding</li>
                     </ul>
                     <div class="link">
-                        <a href="{{route('register')}}">sign up</a>
+                        <a href="<?php echo e(route('register')); ?>">sign up</a>
                     </div>
                 </div>
             </div>
@@ -354,7 +354,8 @@
 
 
 </div>
-<script src="{{asset('landing_page/js/scripts-all.js')}}"></script>
-<script src="{{asset('landing_page/js/main.js')}}"></script>
+<script src="<?php echo e(asset('landing_page/js/scripts-all.js')); ?>"></script>
+<script src="<?php echo e(asset('landing_page/js/main.js')); ?>"></script>
 </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\COMPANY\HUMAN-RESOURCE\resources\views/auth/pricing.blade.php ENDPATH**/ ?>

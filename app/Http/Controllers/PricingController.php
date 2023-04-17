@@ -13,7 +13,9 @@ class PricingController extends Controller
      */
     public function index()
     {
-        //
+      
+        // Show pricing controller 
+        return view('auth.pricing');
     }
 
     /**

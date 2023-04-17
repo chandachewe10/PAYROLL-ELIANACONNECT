@@ -46,7 +46,7 @@
               </li>
              
               <li class="active">
-                <a href="{{route('register')}}" class="animsition-link">Get Started</a>
+                <a href="{{route('PricingController/index')}}" class="animsition-link">Get Started</a>
               </li>
 
               <li class="active">
