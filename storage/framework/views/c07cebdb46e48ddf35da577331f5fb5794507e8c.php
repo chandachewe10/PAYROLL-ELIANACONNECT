@@ -231,7 +231,7 @@
                         <li>Employee self on-boarding</li>
                     </ul>
                     <div class="link">
-                        <a href="<?php echo e(route('register')); ?>">sign up</a>
+                        <a href="<?php echo e(route('registerUser','freePlan')); ?>">sign up</a>
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@
                         <li>Unlimited Employees</li>
                     </ul>
                     <div class="link">
-                        <a href="{route('register')}}">sign up</a>
+                        <a href="<?php echo e(route('registerUser','premiumPlan')); ?>">sign up</a>
                     </div>
                 </div>
             </div>

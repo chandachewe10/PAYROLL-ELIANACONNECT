@@ -12,7 +12,7 @@
     <div>
         <img src="<?php echo e(asset('landing_assets/img/logo1.PNG')); ?>" alt="E-SYSTEMS" class="img-fluid" style="width:100px; height:100px; border-radius:100%">
     </div>
-    <h3>Sign Up to E-Systems: <?php echo e($plan ?? ''); ?></h3>
+    <h3>Sign Up to E-Systems: <?php echo e($planType ?? ''); ?></h3>
     <hr>
     <?php if($errors->any()): ?>
     <div class="alert bg-danger text-light alert-dismissible fade show" role="alert">

@@ -400,6 +400,12 @@ Route::group(['namespace'=>'Admin','as'=>'admin.'], function () {
 
 Auth::routes(['verify' => true]);
 
+Route::get('/registerUser/{planType}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('registerUser');
+
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+
+
+
 
  // Pricing For Employer
  Route::resource('pricing_plan', PricingController::class);
