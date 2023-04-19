@@ -30,6 +30,10 @@
     <form action="<?php echo e(route('register')); ?>" method="post">
         <?php echo method_field('POST'); ?>
         <?php echo csrf_field(); ?>
+
+        <input type="hidden" name="pricing_plan" value="<?php echo e($planType); ?>" required="">
+
+
         <div class="form-group">
             <input type="text" name="username" value="<?php echo e(old('username')); ?>" class="form-control" placeholder="Company Name" required="">
             <i class="ik ik-user"></i>
@@ -350,6 +354,9 @@
         <div class="sign-btn text-center" id="support" style="display:none;">
         <button type="button" class="btn btn-info btn-lg btn-block"><a href="<?php echo e(route('contact_us')); ?>" style="color:white">Contact Support</a></button>
         </div>
+
+
+        
     </form>
 </div>
 

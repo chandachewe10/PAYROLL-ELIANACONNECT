@@ -59,6 +59,7 @@ class RegisterController extends Controller
 	
 		$validate = Validator::make($request->all(), [
 			'email' => 'required|email|unique:admins',
+            'pricing_plan' => 'required',
 			'username' => 'required|string',
 			'password' => 'required|confirmed',
             'country' => 'required|string',
@@ -93,6 +94,7 @@ class RegisterController extends Controller
         $new_company->company_tpin = $request->company_tpin;
 		$new_company->payments_made_at = date('Y-m-d', strtotime("+30 days"));
         $new_company->password = Hash::make($request->password);
+        $new_company->pricing_plan = $request->pricing_plan;
 		$new_company->save();
 
         $Employer = Admin::where('email',"=",$request->email)->firstOrFail();

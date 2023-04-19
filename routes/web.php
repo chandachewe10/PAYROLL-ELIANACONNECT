@@ -120,6 +120,15 @@ Route::group(['namespace'=>'Admin','as'=>'admin.'], function () {
         Route::post('getdata/deduction', "DeductionController@getData")->name('deduction.getData');
         Route::post('all-delete/deduction/', "DeductionController@massDelete")->name('deduction.massDelete');
 
+//deduction routes
+Route::resource('admindeduction','AdminDeductionController');
+Route::post('getdata/admindeduction',"AdminDeductionController@getData")->name('admindeduction.getData');
+Route::post('all-delete/admindeduction/',"AdminDeductionController@massDelete")->name('admindeduction.massDelete');
+
+
+
+
+
       
        //Branches Route
         Route::resource('branches', "Branches");

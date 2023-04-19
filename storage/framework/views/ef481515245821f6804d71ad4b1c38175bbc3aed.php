@@ -1,12 +1,12 @@
 <!--Agent Dashboard--> 
-@if(substr(Auth::guard('Employees')->user()->employee_id,0,5) == 'AGENT')
+<?php if(substr(Auth::guard('Employees')->user()->employee_id,0,5) == 'AGENT'): ?>
 
-@include('Agents.header')
-@include('Agents.dashboard')
-@include('Agents.footer')
+<?php echo $__env->make('Agents.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('Agents.dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('Agents.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!--Agent Dashboard Ends here--> 
-@else
+<?php else: ?>
 
 
 
@@ -15,58 +15,60 @@
 
 
 <!--Employee Dashboard starts here--> 
-@include('employees/menu_header')
+<?php echo $__env->make('employees/menu_header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
  <main class="content">      
 
 <div class="container-fluid p-0">
 <!--Validation Errors starts here -->   
-@if($errors->any())
+<?php if($errors->any()): ?>
     <div class="alert bg-danger text-light alert-dismissible fade show" role="alert">
-        @foreach ($errors->all() as $error)
-            <span>{!! $error !!}</span>
-        @endforeach
+        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <span><?php echo $error; ?></span>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <i class="ik ik-x"></i>
         </button>
     </div>
-    @endif
+    <?php endif; ?>
 <hr>
 <!--End Validation Errors-->
 
 
  <!--Error warning-->
- @if (Session::has('warnings'))
+ <?php if(Session::has('warnings')): ?>
  <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <i class="fa-regular fa-bell"></i>
-        <strong>Hello {{Auth::guard('Employees')->user()->first_name}} !</strong> you have some bad feedbacks, 
+        <strong>Hello <?php echo e(Auth::guard('Employees')->user()->first_name); ?> !</strong> you have some bad feedbacks, 
        
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-             {!! Session::get('warnings') !!}
+             <?php echo Session::get('warnings'); ?>
+
     </div>
- @endif
+ <?php endif; ?>
 <!--Error warnings ends here-->
 
 
 <!--Success-->
-@if (Session::has('success'))
+<?php if(Session::has('success')): ?>
  <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fa-regular fa-bell"></i>
-        <strong>Hello {{Auth::guard('Employees')->user()->first_name}} !</strong> you have some good feedbacks, 
+        <strong>Hello <?php echo e(Auth::guard('Employees')->user()->first_name); ?> !</strong> you have some good feedbacks, 
        
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-             {!! Session::get('success') !!}
+             <?php echo Session::get('success'); ?>
+
     </div>
- @endif
+ <?php endif; ?>
 <!--Sucess ends here-->
 <br>
 
 
-@php 
+<?php 
 $time = time();
 date_default_timezone_set('Africa/Cairo');
 
@@ -76,29 +78,31 @@ $logged_out = \App\Attendance::whereDate('date',"=",date('Y-m-d', $time))->where
 
 $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')->user()->security_number)->first()->pricing_plan;
 
-@endphp
+?>
 
 
 
 
 
-<h1 class="h3 mb-3">Hi <strong>{{Auth::guard('Employees')->user()->first_name}} {{Auth::guard('Employees')->user()->last_name}} </strong> Welcome to the Employees Dashboard</h1>
+<h1 class="h3 mb-3">Hi <strong><?php echo e(Auth::guard('Employees')->user()->first_name); ?> <?php echo e(Auth::guard('Employees')->user()->last_name); ?> </strong> Welcome to the Employees Dashboard</h1>
 
 <!--Login In Status-->  
-<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> @if($logged_in)
-                                     Checked In: {{ $logged_in->time_in }}
-                                     @else 
+<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> <?php if($logged_in): ?>
+                                     Checked In: <?php echo e($logged_in->time_in); ?>
+
+                                     <?php else: ?> 
                                      
-Check-In via A QRCODE FROM YOUR HR
+<button type="button" class="btn btn-info btn-lg btn-block"><i class="fa fa-map-marker"></i><a style="color:white" href=""> Check In</a></button>
                                        
-                                     @endif </span>
+                                     <?php endif; ?> </span>
                                      <br><br>
-                                <span class="text-danger"> @if($logged_out)
-                              Checked Out: {{ $logged_out->time_out }}
-                                     @else 
-                                    Check-Out via A QRCODE FROM YOUR HR
+                                <span class="text-danger"> <?php if($logged_out): ?>
+                              Checked Out: <?php echo e($logged_out->time_out); ?>
+
+                                     <?php else: ?> 
+                                     <button type="button" class="btn btn-danger btn-lg btn-block"><i class="fa fa-map-marker"></i><a style="color:white" href=""> Check Out</a></button>
                                                                         
-                                     @endif </span>
+                                     <?php endif; ?> </span>
 
 
 
@@ -108,7 +112,7 @@ Check-In via A QRCODE FROM YOUR HR
 
 
 <hr>
-  <strong>Employee ID: {{Auth::guard('Employees')->user()->employee_id}} </strong>
+  <strong>Employee ID: <?php echo e(Auth::guard('Employees')->user()->employee_id); ?> </strong>
 <!--Show Reminders here -->   
  <br><br>
 
@@ -189,27 +193,27 @@ Check-In via A QRCODE FROM YOUR HR
 <br>
     
         <div class="row">
-        @php 
+        <?php 
             $reminders =  \App\tasks::where('security_number',"=",Auth::guard('Employees')->user()->security_number)->whereMonth('created_at',"=",date('m'))->whereYear('created_at',"=",date('Y'))->latest()->get();
                
-            @endphp
+            ?>
             <ul class="notes">
        
-                @forelse($reminders as $reminder)
+                <?php $__empty_1 = true; $__currentLoopData = $reminders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reminder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <li>
                     <div class="rotate-1 lazur-bg">
-                        <small>{{$reminder->created_at}}</small>
+                        <small><?php echo e($reminder->created_at); ?></small>
                         <hr>
                         <p>Reminder</p>
-                        <span>{{$reminder->task}}</span>
-                        <a href="LOGOS_UPLOADS/{{$reminder->agenda}}" class="text- pull-right"><i class="fa fa-download "></i></a>
+                        <span><?php echo e($reminder->task); ?></span>
+                        <a href="LOGOS_UPLOADS/<?php echo e($reminder->agenda); ?>" class="text- pull-right"><i class="fa fa-download "></i></a>
                     </div>
                   <br>
                 </li>  
-                @empty
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <li>
                     <div class="rotate-1 lazur-bg">
-                        <small>{{date('F-Y')}}</small>
+                        <small><?php echo e(date('F-Y')); ?></small>
                         <br>
                         <h4>No Reminder</h4>
                         <p>Your reminders will appear here</p>
@@ -217,7 +221,7 @@ Check-In via A QRCODE FROM YOUR HR
                         <a text-danger ><i class="fa fa-download "> Agenda</i></a>
                     </div>
                 </li> 
-               @endforelse 
+               <?php endif; ?> 
             </ul>  
         </div>
     </div>
@@ -264,7 +268,7 @@ Check-In via A QRCODE FROM YOUR HR
                             </div>
                             <h4 class="mt-1 mb-3" style="font-weight: bold;">
                            
-                           <a style="color:black"  href="{{route('employees.kyc_personal_details_view')}}">Finish Now</a>											
+                           <a style="color:black"  href="<?php echo e(route('employees.kyc_personal_details_view')); ?>">Finish Now</a>											
                        
                        
                        </h4>
@@ -299,7 +303,7 @@ Check-In via A QRCODE FROM YOUR HR
                             </div>
                             <h4 class="mt-1 mb-3" style="font-weight: bold;">
                            
-                            <a style="color:black" href="{{route('employees.payroll_details_view')}}">Add me on Payroll</a>											
+                            <a style="color:black" href="<?php echo e(route('employees.payroll_details_view')); ?>">Add me on Payroll</a>											
                         
                         
                         </h4>
@@ -319,7 +323,7 @@ Check-In via A QRCODE FROM YOUR HR
 <br>
 
 <!--For Freee Plan-->
-@if($pricing_plan == 'freePlan')  
+<?php if($pricing_plan == 'freePlan'): ?>  
 <div class="row premiumPlan">
                 <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
                     <div class="card">
@@ -336,7 +340,7 @@ Check-In via A QRCODE FROM YOUR HR
                                 </div>
                             </div>
                           
-                   @php 
+                   <?php 
                           
 $employee_status = \App\Employee::where('email',"=",Auth::guard('Employees')->user()->email)->first();        
 $leave_days = \App\leave_days::where('employee_id',"=",$employee_status->id)->where('status',"=",1)->latest()->first();
@@ -354,13 +358,13 @@ else{
   }                          
                           
                           
-                          @endphp
+                          ?>
                           
                           
                           
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="{{route('employees.leave_details_view')}}">Leave Days</a></h4>
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="<?php echo e(route('employees.leave_details_view')); ?>">Leave Days</a></h4>
                             <div class="mb-0">
-                                <span class="text-success"><i href="{{route('employees.leave_details_view')}}" class="mdi mdi-arrow-bottom-right"></i>Leave balance : {{$remaining_leaves}}</span>
+                                <span class="text-success"><i href="<?php echo e(route('employees.leave_details_view')); ?>" class="mdi mdi-arrow-bottom-right"></i>Leave balance : <?php echo e($remaining_leaves); ?></span>
                                 
                             </div>
                         </div>
@@ -372,11 +376,11 @@ else{
 
                     <!--Leave Status -->   
 
-                    @php 
+                    <?php 
                 $employee =  \App\Employee::where('email',"=",Auth::guard('Employees')->user()->email)->first();
                 $leave = $employee->leave_days->where('status',"=",1)->first()
                    
-                @endphp
+                ?>
 
 
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
@@ -395,16 +399,18 @@ else{
                             </div>
                             <h4>Leave Status</h4>
         <div class="mb-0">
-            <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Accepted: @if($employee)
-                {{ $employee->leave_days->where('status',"=",1)->count()}}
-                 @else  
+            <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Accepted: <?php if($employee): ?>
+                <?php echo e($employee->leave_days->where('status',"=",1)->count()); ?>
+
+                 <?php else: ?>  
                  0 
-                 @endif </span>
-            <span class="text-muted">Pending:  @if($employee)
-                {{ $employee->leave_days->where('status',"=",2)->count()}}
-                 @else  
+                 <?php endif; ?> </span>
+            <span class="text-muted">Pending:  <?php if($employee): ?>
+                <?php echo e($employee->leave_days->where('status',"=",2)->count()); ?>
+
+                 <?php else: ?>  
                  0 
-                 @endif</span>
+                 <?php endif; ?></span>
         </div>
                         </div>
                     </div>
@@ -440,7 +446,7 @@ else{
                             </div>
                             <h4 class="mt-1 mb-3" style="font-weight: bold;">
                             
-                            <a style="color:black" href="{{route('employees.kyc_cashadvance_details_view')}}">Get a salary advance</a>											
+                            <a style="color:black" href="<?php echo e(route('employees.kyc_cashadvance_details_view')); ?>">Get a salary advance</a>											
                         
                         
                         </h4>
@@ -469,22 +475,25 @@ else{
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="">Active:@if($employee)
-                                {{ $employee->cashAdvances->where('loan_status',"=",1)->count() }}
-                                 @else  
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="">Active:<?php if($employee): ?>
+                                <?php echo e($employee->cashAdvances->where('loan_status',"=",1)->count()); ?>
+
+                                 <?php else: ?>  
                                  0 
-                                 @endif </a></h4>
+                                 <?php endif; ?> </a></h4>
                             <div class="mb-0">
-                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>Pending: @if($employee)
-                                    {{ $employee->cashAdvances->where('loan_status',"=",2)->count() }}
-                                     @else  
+                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>Pending: <?php if($employee): ?>
+                                    <?php echo e($employee->cashAdvances->where('loan_status',"=",2)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif</span>
-                                <span class="text-muted">Balance:  @if($employee)
-                                    ZMW {{ $employee->cashAdvances->where('loan_status',"=",1)->sum('rate_amount') - $employee->cashAdvances->where('loan_status',"=",1)->sum('total_repayments') }}
-                                     @else  
+                                     <?php endif; ?></span>
+                                <span class="text-muted">Balance:  <?php if($employee): ?>
+                                    ZMW <?php echo e($employee->cashAdvances->where('loan_status',"=",1)->sum('rate_amount') - $employee->cashAdvances->where('loan_status',"=",1)->sum('total_repayments')); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif</span>
+                                     <?php endif; ?></span>
                             </div>
                         </div>
                     </div>
@@ -514,7 +523,7 @@ else{
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="{{route('employees.overtime_details_view')}}">Work overtime</a></h4>
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="<?php echo e(route('employees.overtime_details_view')); ?>">Work overtime</a></h4>
                             <div class="mb-0">
                                 <span class="text-danger"> <i  class="mdi mdi-arrow-bottom-right"></i>Worked overtime</span>
                                 <span class="text-muted">Apply</span>
@@ -543,16 +552,18 @@ else{
                             </div>
                             <h4>Overtime Status</h4>
                             <div class="mb-0">
-                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Total:  @if($employee)
-                                    {{ $employee->overtimes->where('status',"=",1)->count()}}
-                                     @else  
+                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Total:  <?php if($employee): ?>
+                                    <?php echo e($employee->overtimes->where('status',"=",1)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif </span>
-                                <span class="text-muted">Pending:  @if($employee)
-                                    {{ $employee->overtimes->where('status',"=",2)->count()}}
-                                     @else  
+                                     <?php endif; ?> </span>
+                                <span class="text-muted">Pending:  <?php if($employee): ?>
+                                    <?php echo e($employee->overtimes->where('status',"=",2)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif </span>
+                                     <?php endif; ?> </span>
                             </div>                 
                         </div>
                     </div> 
@@ -566,7 +577,7 @@ else{
 
 
 
-@else
+<?php else: ?>
 
 
 
@@ -591,7 +602,7 @@ else{
                                 </div>
                             </div>
                           
-                   @php 
+                   <?php 
                           
 $employee_status = \App\Employee::where('email',"=",Auth::guard('Employees')->user()->email)->first();        
 $leave_days = \App\leave_days::where('employee_id',"=",$employee_status->id)->where('status',"=",1)->latest()->first();
@@ -609,13 +620,13 @@ else{
   }                          
                           
                           
-                          @endphp
+                          ?>
                           
                           
                           
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="{{route('employees.leave_details_view')}}">Leave Days</a></h4>
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="<?php echo e(route('employees.leave_details_view')); ?>">Leave Days</a></h4>
                             <div class="mb-0">
-                                <span class="text-success"><i href="{{route('employees.leave_details_view')}}" class="mdi mdi-arrow-bottom-right"></i>Leave balance : {{$remaining_leaves}}</span>
+                                <span class="text-success"><i href="<?php echo e(route('employees.leave_details_view')); ?>" class="mdi mdi-arrow-bottom-right"></i>Leave balance : <?php echo e($remaining_leaves); ?></span>
                                 
                             </div>
                         </div>
@@ -627,11 +638,11 @@ else{
 
                     <!--Leave Status -->   
 
-                    @php 
+                    <?php 
                 $employee =  \App\Employee::where('email',"=",Auth::guard('Employees')->user()->email)->first();
                 $leave = $employee->leave_days->where('status',"=",1)->first()
                    
-                @endphp
+                ?>
 
 
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
@@ -650,16 +661,18 @@ else{
                             </div>
                             <h4>Leave Status</h4>
         <div class="mb-0">
-            <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Accepted: @if($employee)
-                {{ $employee->leave_days->where('status',"=",1)->count()}}
-                 @else  
+            <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Accepted: <?php if($employee): ?>
+                <?php echo e($employee->leave_days->where('status',"=",1)->count()); ?>
+
+                 <?php else: ?>  
                  0 
-                 @endif </span>
-            <span class="text-muted">Pending:  @if($employee)
-                {{ $employee->leave_days->where('status',"=",2)->count()}}
-                 @else  
+                 <?php endif; ?> </span>
+            <span class="text-muted">Pending:  <?php if($employee): ?>
+                <?php echo e($employee->leave_days->where('status',"=",2)->count()); ?>
+
+                 <?php else: ?>  
                  0 
-                 @endif</span>
+                 <?php endif; ?></span>
         </div>
                         </div>
                     </div>
@@ -695,7 +708,7 @@ else{
                             </div>
                             <h4 class="mt-1 mb-3" style="font-weight: bold;">
                             
-                            <a style="color:black" href="{{route('employees.kyc_cashadvance_details_view')}}">Get a salary advance</a>											
+                            <a style="color:black" href="<?php echo e(route('employees.kyc_cashadvance_details_view')); ?>">Get a salary advance</a>											
                         
                         
                         </h4>
@@ -724,22 +737,25 @@ else{
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="">Active:@if($employee)
-                                {{ $employee->cashAdvances->where('loan_status',"=",1)->count() }}
-                                 @else  
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="">Active:<?php if($employee): ?>
+                                <?php echo e($employee->cashAdvances->where('loan_status',"=",1)->count()); ?>
+
+                                 <?php else: ?>  
                                  0 
-                                 @endif </a></h4>
+                                 <?php endif; ?> </a></h4>
                             <div class="mb-0">
-                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>Pending: @if($employee)
-                                    {{ $employee->cashAdvances->where('loan_status',"=",2)->count() }}
-                                     @else  
+                                <span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>Pending: <?php if($employee): ?>
+                                    <?php echo e($employee->cashAdvances->where('loan_status',"=",2)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif</span>
-                                <span class="text-muted">Balance:  @if($employee)
-                                    ZMW {{ $employee->cashAdvances->where('loan_status',"=",1)->sum('rate_amount') - $employee->cashAdvances->where('loan_status',"=",1)->sum('total_repayments') }}
-                                     @else  
+                                     <?php endif; ?></span>
+                                <span class="text-muted">Balance:  <?php if($employee): ?>
+                                    ZMW <?php echo e($employee->cashAdvances->where('loan_status',"=",1)->sum('rate_amount') - $employee->cashAdvances->where('loan_status',"=",1)->sum('total_repayments')); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif</span>
+                                     <?php endif; ?></span>
                             </div>
                         </div>
                     </div>
@@ -769,7 +785,7 @@ else{
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="{{route('employees.overtime_details_view')}}">Work overtime</a></h4>
+                            <h4 class="mt-1 mb-3" style="font-weight: bold;"><a style="color:black" href="<?php echo e(route('employees.overtime_details_view')); ?>">Work overtime</a></h4>
                             <div class="mb-0">
                                 <span class="text-danger"> <i  class="mdi mdi-arrow-bottom-right"></i>Worked overtime</span>
                                 <span class="text-muted">Apply</span>
@@ -798,16 +814,18 @@ else{
                             </div>
                             <h4>Overtime Status</h4>
                             <div class="mb-0">
-                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Total:  @if($employee)
-                                    {{ $employee->overtimes->where('status',"=",1)->count()}}
-                                     @else  
+                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Total:  <?php if($employee): ?>
+                                    <?php echo e($employee->overtimes->where('status',"=",1)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif </span>
-                                <span class="text-muted">Pending:  @if($employee)
-                                    {{ $employee->overtimes->where('status',"=",2)->count()}}
-                                     @else  
+                                     <?php endif; ?> </span>
+                                <span class="text-muted">Pending:  <?php if($employee): ?>
+                                    <?php echo e($employee->overtimes->where('status',"=",2)->count()); ?>
+
+                                     <?php else: ?>  
                                      0 
-                                     @endif </span>
+                                     <?php endif; ?> </span>
                             </div>                 
                         </div>
                     </div> 
@@ -821,7 +839,7 @@ else{
 
 
 <!--End Paid Plan-->
-@endif
+<?php endif; ?>
 
 
 
@@ -844,8 +862,8 @@ else{
 
 
 
-      @include('employees/footer')
+      <?php echo $__env->make('employees/footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
-@endif
-<!--Employee Dashboard Ends here-->
+<?php endif; ?>
+<!--Employee Dashboard Ends here--><?php /**PATH C:\xampp\htdocs\COMPANY\HUMAN-RESOURCE\resources\views/employees/dashboard.blade.php ENDPATH**/ ?>

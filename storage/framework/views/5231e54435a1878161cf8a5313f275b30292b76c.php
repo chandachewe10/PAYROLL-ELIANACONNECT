@@ -9,8 +9,8 @@
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
  <!-- Favicons -->
-  <link href="{{asset('landing_assets/img/fav.PNG')}}" rel="icon">
-  <link href="{{asset('landing_assets/img/apple-touch-icon.PNG')}}" rel="apple-touch-icon">
+  <link href="<?php echo e(asset('landing_assets/img/fav.PNG')); ?>" rel="icon">
+  <link href="<?php echo e(asset('landing_assets/img/apple-touch-icon.PNG')); ?>" rel="apple-touch-icon">
   
 <!-- Date time picker -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
@@ -42,17 +42,17 @@
 
 	<title>E-SYSTEMS::EMPLOYEES DASHBOARD</title>
 
-	<link href="{{asset('dashboardassets/css/app.css')}}" rel="stylesheet">
+	<link href="<?php echo e(asset('dashboardassets/css/app.css')); ?>" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 
-@php   
+<?php   
 
 $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')->user()->security_number)->first()->pricing_plan;
 
-@endphp
+?>
 
 <style>   
 .premiumPlan {
@@ -70,7 +70,7 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="{{('employees_dashboard')}}">
+				<a class="sidebar-brand" href="<?php echo e(('employees_dashboard')); ?>">
           <span class="align-middle">Menu Dashboard</span>
         </a>
 
@@ -80,123 +80,123 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 					</li>
 
 					<li class="sidebar-item ">
-						<a class="sidebar-link" href="{{('employees_dashboard')}}">
+						<a class="sidebar-link" href="<?php echo e(('employees_dashboard')); ?>">
               <i class="align-middle" data-feather="sliders"></i> <span class="align-middle" style="color:white">Dashboard</span>
             </a>
 					</li>
                   
                    <li class="sidebar-item ">
-						<a class="sidebar-link" href="{{route('employees.kyc_personal_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.kyc_personal_details_view')); ?>">
               <i class="align-middle fa fa-pencil" ></i> <span class="align-middle" style="color:white">Update KYC</span>
             </a>
 					</li>
 
                   
            <li class="sidebar-item ">
-						<a class="sidebar-link" href="{{route('employees.payroll_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.payroll_details_view')); ?>">
               <i class="align-middle fa fa-dollar" ></i> <span class="align-middle" style="color:white">Payroll</span>
             </a>
 					</li>
         
                   
                   
-					@if($pricing_plan == 'freePlan')     
+					<?php if($pricing_plan == 'freePlan'): ?>     
 
           <li class="sidebar-item premiumPlan">
-						<a class="sidebar-link" href="{{route('employees.payslip_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.payslip_details_view')); ?>">
               <i class="align-middle fa fa-credit-card" ></i> <span class="align-middle" style="color:white">Payslips</span>
             </a>
 					</li>
 
-@else
+<?php else: ?>
 <li class="sidebar-item ">
-						<a class="sidebar-link" href="{{route('employees.payslip_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.payslip_details_view')); ?>">
               <i class="align-middle fa fa-credit-card" ></i> <span class="align-middle" style="color:white">Payslips</span>
             </a>
 					</li>
-         @endif
+         <?php endif; ?>
 
 
-		 @if($pricing_plan == 'freePlan')
+		 <?php if($pricing_plan == 'freePlan'): ?>
           <li class="sidebar-item premiumPlan">
-						<a class="sidebar-link" href="{{route('employees.leave_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.leave_details_view')); ?>">
               <i class="align-middle fa fa-calendar-alt" ></i> <span class="align-middle" style="color:white">Leave Days</span>
             </a>
 					</li>					
-@else
+<?php else: ?>
 <li class="sidebar-item">
-						<a class="sidebar-link" href="{{route('employees.leave_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.leave_details_view')); ?>">
               <i class="align-middle fa fa-calendar-alt" ></i> <span class="align-middle" style="color:white">Leave Days</span>
             </a>
 					</li>	
 					
-					@endif
+					<?php endif; ?>
 					
 	
-					@if($pricing_plan == 'freePlan')				
+					<?php if($pricing_plan == 'freePlan'): ?>				
 
 					<li class="sidebar-item premiumPlan">
-						<a class="sidebar-link" href="{{route('employees.overtime_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.overtime_details_view')); ?>">
               <i class="align-middle fa fa-clock-o" ></i> <span class="align-middle" style="color:white">Overtime</span>
             </a>
 					</li>
-					@else
+					<?php else: ?>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="{{route('employees.kyc_cashadvance_details_view')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.kyc_cashadvance_details_view')); ?>">
               <i class="align-middle fa fa-money-bill" ></i> <span class="align-middle" style="color:white">Salary Advance</span>
             </a>
 					</li>
-        @endif            
+        <?php endif; ?>            
            
 		
-		@if($pricing_plan == 'freePlan')
+		<?php if($pricing_plan == 'freePlan'): ?>
            <li class="sidebar-item premiumPlan">
-						<a class="sidebar-link" href="{{route('employees.leave_history')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.leave_history')); ?>">
               <i class="align-middle fa fa-clock-o" ></i> <span class="align-middle" style="color:white">Leave History</span>
             </a>
 					</li>
 
-@else
+<?php else: ?>
 <li class="sidebar-item">
-						<a class="sidebar-link" href="{{route('employees.leave_history')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.leave_history')); ?>">
               <i class="align-middle fa fa-clock-o" ></i> <span class="align-middle" style="color:white">Leave History</span>
             </a>
 					</li>
-@endif 
+<?php endif; ?> 
 
-@if($pricing_plan == 'freePlan')
+<?php if($pricing_plan == 'freePlan'): ?>
 
 					<li class="sidebar-item premiumPlan">
-						<a class="sidebar-link" href="{{route('employees.attendance_history')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.attendance_history')); ?>">
               <i class="align-middle fa fa-clock-o" ></i> <span class="align-middle" style="color:white">Attendance History</span>
             </a>
 					</li>     
 					
-					@else 
+					<?php else: ?> 
 					
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="{{route('employees.attendance_history')}}">
+						<a class="sidebar-link" href="<?php echo e(route('employees.attendance_history')); ?>">
               <i class="align-middle fa fa-clock-o" ></i> <span class="align-middle" style="color:white">Attendance History</span>
             </a>
 					</li>   
                     
-        @endif          
+        <?php endif; ?>          
                 
-		@if($pricing_plan == 'freePlan')  
+		<?php if($pricing_plan == 'freePlan'): ?>  
                 <li class="sidebar-item premiumPlan">
 						<a class="sidebar-link">
               <i class="align-middle fa fa-sign-out" ></i> <span onclick="event.preventDefault();document.getElementById('logout-form').submit()" class="align-middle" style="color:white">Sign Out</span>
             </a>
 					</li>         
                     
-        @else            
+        <?php else: ?>            
         <li class="sidebar-item">
 						<a class="sidebar-link">
               <i class="align-middle fa fa-sign-out" ></i> <span onclick="event.preventDefault();document.getElementById('logout-form').submit()" class="align-middle" style="color:white">Sign Out</span>
             </a>
 					</li>        
-					@endif             
+					<?php endif; ?>             
 				</ul>
 
               
@@ -207,10 +207,10 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 					<div class="sidebar-cta-content">
 						<strong class="d-inline-block mb-2">Work Description</strong>
 						<div class="mb-3 text-sm">
-            {{Auth::guard('Employees')->user()->remark}} at:
+            <?php echo e(Auth::guard('Employees')->user()->remark); ?> at:
 						</div>
 						<div class="d-grid">
-							<a href="upgrade-to-pro.html" class="btn btn-primary">{{\App\Admin::where('security_number',"=",Auth::guard('Employees')->user()->security_number)->first()->username}}</a>
+							<a href="upgrade-to-pro.html" class="btn btn-primary"><?php echo e(\App\Admin::where('security_number',"=",Auth::guard('Employees')->user()->security_number)->first()->username); ?></a>
 						</div>
 					</div>
 				</div>
@@ -239,7 +239,7 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<!--Profile Route-->
-                                <a class="dropdown-item" href="{{route('employees.employee_profile')}}">
+                                <a class="dropdown-item" href="<?php echo e(route('employees.employee_profile')); ?>">
               <i class="align-middle fas fa-user" ></i> <span class="align-middle"> Personal Profile</span>
             </a>	
 								<!--End profile route-->	
@@ -248,7 +248,7 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 
 							
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{{route('employees.change_password_view')}}"><i class="align-middle me-1" data-feather="settings"></i> Change password</a>
+								<a class="dropdown-item" href="<?php echo e(route('employees.change_password_view')); ?>"><i class="align-middle me-1" data-feather="settings"></i> Change password</a>
                                 <hr>
 								<a class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit()"><i class="align-middle me-1" data-feather="help-circle"></i> Log out</a>
 								<div class="dropdown-divider"></div>
@@ -269,3 +269,4 @@ $pricing_plan = \App\Admin::where('security_number',"=",Auth::guard('Employees')
 
 
 <!--Import the blade here-->
+<?php /**PATH C:\xampp\htdocs\COMPANY\HUMAN-RESOURCE\resources\views/employees/menu_header.blade.php ENDPATH**/ ?>

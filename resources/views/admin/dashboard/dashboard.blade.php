@@ -18,8 +18,8 @@
      <div class="d-inline">
       <h5>Dashboard</h5>
      
-      
-      <span>Dashboard for the HR</span>
+   
+       <span>Dashboard for the HR</span>
       <br>
     </div>
    

@@ -42,7 +42,8 @@ class Admin extends Authenticatable implements MustVerifyEmail
         'tax_done',        
         'pension_done',
         'insurance_done',
-        'company_tpin'
+        'company_tpin',
+        'pricing_plan'
     ];
 
     protected $hidden = [

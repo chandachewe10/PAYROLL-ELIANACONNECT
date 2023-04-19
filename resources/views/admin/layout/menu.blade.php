@@ -75,10 +75,71 @@
         </div>
 
 
+<style>   
+.premiumPlan {
+  opacity: 0.5; /* make the div 50% translucent */
+  color: #999; /* grey out the text */
+  cursor: default; /* make it unclickable */
+  pointer-events: none; /* prevent mouse events from firing */
+}
 
 
 
 
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  padding: 0.25em 0.5em;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.25em;
+  white-space: nowrap;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 100%;
+  transition-property: visibility;
+  transition-delay: 0s;
+}
+
+.premiumPlan:hover .tooltiptext {
+  visibility: visible;
+  transition-delay: 0.3s;
+}
+
+</style>
+
+
+
+
+@if(Auth::user() && Auth::user()->pricing_plan == 'freePlan')
+        <div class="premiumPlan nav-item has-sub {{ request()->routeIs('admin.allowance.*') ? 'active open' : '' }}">
+            <a href="javascript:void(0)"><i class="fa fa-industry" style="font-size: 14px;"></i><span>Branches</span> 
+            
+               <span title="Total Records" class="badge badge-light text-dark">
+                {{\App\Branches::where('company_id',"=",Auth::user()->security_number)->count()}}
+                </span>
+                               
+            </a>
+            <div class="submenu-content">
+               <a href="{{route('admin.branches.create')}}" class="menu-item {{ request()->routeIs('admin.branches.create') ? 'active' : '' }}"><i class="fa fa-upload" style="font-size: 14px;"></i>Add Branches</a>
+                <a href="{{ route('admin.branches.index') }}" class="menu-item {{ request()->routeIs('admin.branches.index') ? 'active' : '' }}"><i class="ik file-text ik-file-text"></i>List of Branches</a>
+                <a href="{{ route('admin.branches.switch') }}" class="menu-item {{ request()->routeIs('admin.branches.switch') ? 'active' : '' }}"><i class="ik file-text ik-file-text"></i>Switch Branches</a>
+                                        
+            </div>
+        </div>
+
+        @else
         <div class="nav-item has-sub {{ request()->routeIs('admin.allowance.*') ? 'active open' : '' }}">
             <a href="javascript:void(0)"><i class="fa fa-industry" style="font-size: 14px;"></i><span>Branches</span> 
             
@@ -94,6 +155,22 @@
                                         
             </div>
         </div>
+
+        @endif
+
+        <div class="nav-item has-sub {{ request()->routeIs('admin.admindeduction.*') ? 'active open' : '' }}">
+            <a href="javascript:void(0)"><i class="ik file-minus ik-file-minus"></i><span>Deductions</span> 
+               
+            </a>
+            <div class="submenu-content">
+                <a href="{{ route('admin.admindeduction.create') }}" class="menu-item {{ request()->routeIs('admin.admindeduction.create') ? 'active' : '' }}"><i class="ik ik-plus-circle"></i>Add New Deduction</a>
+                <a href="{{ route('admin.admindeduction.index') }}" class="menu-item {{ request()->routeIs('admin.admindeduction.index') ? 'active' : '' }}"><i class="ik file-text ik-file-text"></i>List Of Deductions</a>
+            </div>
+        </div>
+
+
+
+
 
 
 

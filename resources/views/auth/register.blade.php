@@ -32,6 +32,10 @@
     <form action="{{ route('register') }}" method="post">
         @method('POST')
         @csrf
+
+        <input type="hidden" name="pricing_plan" value="{{$planType}}" required="">
+
+
         <div class="form-group">
             <input type="text" name="username" value="{{ old('username') }}" class="form-control" placeholder="Company Name" required="">
             <i class="ik ik-user"></i>
@@ -352,6 +356,9 @@
         <div class="sign-btn text-center" id="support" style="display:none;">
         <button type="button" class="btn btn-info btn-lg btn-block"><a href="{{route('contact_us')}}" style="color:white">Contact Support</a></button>
         </div>
+
+
+        
     </form>
 </div>
 
