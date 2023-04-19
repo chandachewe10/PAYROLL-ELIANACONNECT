@@ -54,20 +54,22 @@ class AdminDeductionController extends Controller
         abort(404);
     }
 
-    public function edit(Deduction $deduction)
+    public function edit(Deduction $admindeduction)
     {
+        
     	return View($this->folder.'edit',[
-    		'deduction' => $deduction,
-    		'form_update' => route($this->folder.'update',['deduction'=>$deduction]),
+    		'admindeduction' => $admindeduction,
+    		'form_update' => route($this->folder.'update',['admindeduction'=>$admindeduction]),
     	]);
     }
 
-    public function update(AdminDeductionRequest $request, Deduction $deduction)
+    public function update(AdminDeductionRequest $request, Deduction $admindeduction)
     {
-        $deduction->update($request->all());
+       
+        $admindeduction->update($request->all());
         return response()->json([
             'status'=>true,
-            'message'=>'Deduction '.$deduction->name.' updated successfully.',
+            'message'=>'Deduction '.$admindeduction->name.' updated successfully.',
             'redirect_to' => route($this->folder.'index')
             ]);
     }

@@ -25,7 +25,7 @@ class AdminDeductionRequest extends FormRequest
     {
         if ($this->method() == 'PUT') 
         {
-            $name_rules = "required|unique:deductions,name,{$this->deduction->id}"; 
+            $name_rules = "required|unique:deductions,name,{$this->admindeduction->id}"; 
         }
         else 
         {

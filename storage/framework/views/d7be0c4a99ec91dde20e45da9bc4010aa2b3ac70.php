@@ -1,16 +1,16 @@
-@extends('admin.layout.app')
 
-@section('title') {{ $admindeduction->title }} - Edit Deduction @endsection
 
-@section('css')
+<?php $__env->startSection('title'); ?> <?php echo e($admindeduction->title); ?> - Edit Deduction <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
 <style type="text/css">
     .overflow-visible{
         overflow: visible !important;
     }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="page-header">
   <div class="row align-items-end">
@@ -27,15 +27,15 @@
     <nav class="breadcrumb-container" aria-label="breadcrumb">
        <ol class="breadcrumb">
           <li class="breadcrumb-item">
-             <a href="{{ route('admin.dashboard') }}"><i class="ik ik-home"></i></a>
+             <a href="<?php echo e(route('admin.dashboard')); ?>"><i class="ik ik-home"></i></a>
          </li>
          <li class="breadcrumb-item">
-             <a href="{{ route('admin.admindeduction.index') }}">Deduction</a>
+             <a href="<?php echo e(route('admin.admindeduction.index')); ?>">Deduction</a>
          </li>
          <li class="breadcrumb-item">
              <a href="#">Edit</a>
          </li>
-         <li class="breadcrumb-item active" aria-current="page">{{ $admindeduction->name }}</li>
+         <li class="breadcrumb-item active" aria-current="page"><?php echo e($admindeduction->name); ?></li>
      </ol>
  </nav>
 </div>
@@ -52,42 +52,42 @@
             <div class="widget-body">
                 <div class="overlay hidden">
                     <i class="ik ik-refresh-ccw loading"></i>
-                    <span class="overlay-text">Deduction {{ $admindeduction->name }} Updating...</span>
+                    <span class="overlay-text">Deduction <?php echo e($admindeduction->name); ?> Updating...</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="Deduction">
-                        <h5 class="text-secondary">Edit {{ $admindeduction->name }} Deduction</h5>
+                        <h5 class="text-secondary">Edit <?php echo e($admindeduction->name); ?> Deduction</h5>
                     </div>
                 </div>
 
-                <form action="{{ $form_update }}" method="POST" id="editDeduction">
-                    @method('PUT')
-                    @csrf
+                <form action="<?php echo e($form_update); ?>" method="POST" id="editDeduction">
+                    <?php echo method_field('PUT'); ?>
+                    <?php echo csrf_field(); ?>
                     <div class="form-group">
                         <label for="name">Name</label><small class="text-danger">*</small>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="ex: Standard Deduction" autocomplete="off" value="{{ $admindeduction->name }}">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="ex: Standard Deduction" autocomplete="off" value="<?php echo e($admindeduction->name); ?>">
                         <small class="text-danger err" id="name-err"></small>
                     </div>
                     <div class="form-group">
                         <label for="amount">Amount</label><small class="text-danger">*</small>
-                        <input type="text" name="amount" class="form-control" id="amount" placeholder="ex: 200.15" autocomplete="off" value="{{ $admindeduction->amount }}">
+                        <input type="text" name="amount" class="form-control" id="amount" placeholder="ex: 200.15" autocomplete="off" value="<?php echo e($admindeduction->amount); ?>">
                         <small class="text-danger err" id="amount-err"></small>
                     </div>
 
-                    @php   
+                    <?php   
 
 $employees = \App\Employee::where('security_number',"=",Auth::user()->security_number)->get()
 
 
-@endphp
+?>
                     <div class="form-group">
                         <label for="Employee Name">Employee(s)</label><small class="text-danger">*</small>
                         <select class="form-control" name="employee_id" >  
                           <option value=1>For All Employees</option> 
-                          @foreach($employees as $employee)    
+                          <?php $__currentLoopData = $employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>    
                                           
-                            <option value="{{$employee->employee_id}}">For {{$employee->first_name}} {{$employee->last_name}} - {{$employee->email}}</option>                            
-                          @endforeach
+                            <option value="<?php echo e($employee->employee_id); ?>">For <?php echo e($employee->first_name); ?> <?php echo e($employee->last_name); ?> - <?php echo e($employee->email); ?></option>                            
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         <small class="text-danger err" id="position_id-err"></small>
                       
@@ -99,31 +99,31 @@ $employees = \App\Employee::where('security_number',"=",Auth::user()->security_n
 
                     <div class="form-group">
                           <label for="startDate">Start Date</label><small class="text-danger">*</small>
-                          <input type="text" class="form-control datetimepicker-input" name="start_date" id="start_date" value="{{ $admindeduction->start_date }}" data-toggle="datetimepicker" data-target="#start_date" autocomplete="off">
+                          <input type="text" class="form-control datetimepicker-input" name="start_date" id="start_date" value="<?php echo e($admindeduction->start_date); ?>" data-toggle="datetimepicker" data-target="#start_date" autocomplete="off">
                           <small class="text-danger err" id="start_date-err"></small>
                         </div>
 
 
                         <div class="form-group">
                           <label for="endDate">End Date</label><small class="text-danger">*</small>
-                          <input type="text" class="form-control datetimepicker-input" name="end_date" id="end_date" value="{{ $admindeduction->end_date }}" data-toggle="datetimepicker" data-target="#end_date" autocomplete="off">
+                          <input type="text" class="form-control datetimepicker-input" name="end_date" id="end_date" value="<?php echo e($admindeduction->end_date); ?>" data-toggle="datetimepicker" data-target="#end_date" autocomplete="off">
                           <small class="text-danger err" id="end_date-err"></small>
                           <small class="text-danger">The deductions shall be deducted between the start date and the end date</small>
                         </div>
 
-                        <input type="hidden" name="security_number" value="{{auth()->user()->security_number}}" >
+                        <input type="hidden" name="security_number" value="<?php echo e(auth()->user()->security_number); ?>" >
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="description">Description</label>
-                          <textarea class="form-control" id="description" name="description" placeholder="Some description about Deduction...">{{ old('description',$admindeduction->description) }}</textarea>
+                          <textarea class="form-control" id="description" name="description" placeholder="Some description about Deduction..."><?php echo e(old('description',$admindeduction->description)); ?></textarea>
                           <small class="text-danger err" id="description-err"></small>
                         </div>
                       </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="ik save ik-save"></i>Update</button>
 
-                    <a href="{{ route('admin.admindeduction.index') }}" class="btn btn-light"><i class="ik arrow-left ik-arrow-left"></i> Go Back</a>
+                    <a href="<?php echo e(route('admin.admindeduction.index')); ?>" class="btn btn-light"><i class="ik arrow-left ik-arrow-left"></i> Go Back</a>
                 </form>
             </div>
 
@@ -131,9 +131,9 @@ $employees = \App\Employee::where('security_number',"=",Auth::user()->security_n
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script type="text/javascript">
 $(document).ready(function($) {
   $("#editDeduction").submit(function(event){
@@ -142,4 +142,5 @@ $(document).ready(function($) {
   }); 
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\COMPANY\HUMAN-RESOURCE\resources\views/admin/admindeduction/edit.blade.php ENDPATH**/ ?>
