@@ -74,9 +74,9 @@ class AdminDeductionController extends Controller
             ]);
     }
 
-    public function destroy(Deduction $deduction)
+    public function destroy(Deduction $admindeduction)
     {
-        $deduction->delete();
+        $admindeduction->delete();
         return response()->json([
                 'status' => true,
                 'message' => "Your Record has been Deleted!",
