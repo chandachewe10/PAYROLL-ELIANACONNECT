@@ -312,10 +312,10 @@ else{
               <td></td>
               <td></td>
               @if($salary_advance)
-              <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $pension_value + $insurance_value  + ($payee) + $salary_advance->emi,2) }} </td>
+              <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $total_standard_deductions + $pension_value + $insurance_value  + ($payee) + $salary_advance->emi,2) }} </td>
               <td width="25%" align="right"><b>Gross Pay:</b> K{{ number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2) }}</td>
            @else
-           <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $pension_value + $insurance_value + ($payee),2) }} </td>
+           <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $total_standard_deductions + $pension_value + $insurance_value + ($payee),2) }} </td>
            <td width="25%" align="right"><b>Gross Pay:</b> K{{ number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2) }}</td>
            @endif
 
@@ -327,10 +327,10 @@ else{
               <td width="25%" align="right"><b>Net Pay:</b></td>
               <td width="25%" align="right"><b>
               @if($salary_advance)
-                  K{{ number_format((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee) + $salary_advance->emi),2)}}
+                  K{{ number_format((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount + $total_standard_deductions +($pension_value) + ($insurance_value) + ($payee) + $salary_advance->emi),2)}}
                
               @else   
-              K{{ number_format((($basic_pay) + $housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee)),2)}} 
+              K{{ number_format((($basic_pay) + $housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount + $total_standard_deductions + ($pension_value) + ($insurance_value) + ($payee)),2)}} 
               @endif
                 </b></td>
             </tr>
