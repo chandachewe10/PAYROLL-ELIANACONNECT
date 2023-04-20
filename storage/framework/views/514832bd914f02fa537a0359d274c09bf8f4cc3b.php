@@ -133,22 +133,22 @@
     
   <div class="card border-1">
     <div class="card-header">
-    <h2 class="text-center border-top-bootom-1 py-4">{{Auth::user()->username}} - EMPLOYEE PAYMENT SLIPS</h2>
-    <h3 class="text-center border-top-bootom-1 py-4">{{Auth::user()->company_address}}</h3>
+    <h2 class="text-center border-top-bootom-1 py-4"><?php echo e(Auth::user()->username); ?> - EMPLOYEE PAYMENT SLIPS</h2>
+    <h3 class="text-center border-top-bootom-1 py-4"><?php echo e(Auth::user()->company_address); ?></h3>
     <center>
     
-  @if(Auth::user()->company_logo == "NULL" || Auth::user()->company_logo == "Null")
-   <img src="https://eu.ui-avatars.com/api/?name={{Auth::user()->username}}" class="img-fluid my-5" width="100" height="100" alt="Company Logo"/> 
-  @else
- <img src="{{asset('LOGOS_UPLOADS/'.Auth::user()->company_logo)}}" class="img-fluid my-5" width="100" height="100" alt="Company Logo"/> 
-  @endif
+  <?php if(Auth::user()->company_logo == "NULL" || Auth::user()->company_logo == "Null"): ?>
+   <img src="https://eu.ui-avatars.com/api/?name=<?php echo e(Auth::user()->username); ?>" class="img-fluid my-5" width="100" height="100" alt="Company Logo"/> 
+  <?php else: ?>
+ <img src="<?php echo e(asset('LOGOS_UPLOADS/'.Auth::user()->company_logo)); ?>" class="img-fluid my-5" width="100" height="100" alt="Company Logo"/> 
+  <?php endif; ?>
   
   </center>
-    <h2 class="text-center border-top-bootom-1 py-4">{{ $payDay }}</h2>
+    <h2 class="text-center border-top-bootom-1 py-4"><?php echo e($payDay); ?></h2>
     </div>
     <div class="card-body border">
 
-@php
+<?php
 
 
  $total_hours_worked = 0;
@@ -168,7 +168,7 @@ else{
 
 }
 
-@endphp
+?>
 
 
       <div class="row">
@@ -176,20 +176,20 @@ else{
           <table cellspacing="0" cellpadding="3" class="table">
             <tr>
               <td width="25%" align="right">Employee Name: </td>
-              <td width="25%"><b>{{ $payslip->first_name." ".$payslip->last_name }}</b></td>
+              <td width="25%"><b><?php echo e($payslip->first_name." ".$payslip->last_name); ?></b></td>
               <td width="25%" align="right">Rate per Hour: </td>
-              <td width="25%" align="right">K{{ $payslip->rate_per_hour }}</td>
+              <td width="25%" align="right">K<?php echo e($payslip->rate_per_hour); ?></td>
             </tr>
             <tr>
               <td width="25%" align="right">Employee ID: </td>
-              <td width="25%">{{ $payslip->employee_id }}</td>
+              <td width="25%"><?php echo e($payslip->employee_id); ?></td>
               <td width="25%" align="right">Hours Worked: </td>
-              <td width="25%" align="right">{{ $total_hours_worked }}</td>
+              <td width="25%" align="right"><?php echo e($total_hours_worked); ?></td>
             </tr>
             <tr>
 
               <td width="25%" align="right"><b>Basic Pay: </b></td>
-              <td width="25%" align="right"><b>K{{ number_format($basic_pay,2) }}</b></td>
+              <td width="25%" align="right"><b>K<?php echo e(number_format($basic_pay,2)); ?></b></td>
               <td><b>Deductions</b></td>
               <td><b>Allowances</b></td>
             </tr>
@@ -202,106 +202,107 @@ else{
                 <p style="font-weight:bold">
                 <p>
                   
-                Tax: {{number_format($payee,2)}}
+                Tax: <?php echo e(number_format($payee,2)); ?>
+
                   </p>
                        
-                  @if($pension->applied_on === 'GROSS PAY')
-                  <p>{{$pension->pension_name}}: K{{ number_format($gross_earnings*($pension->pension/100),2) }}</p>
-                    @php 
+                  <?php if($pension->applied_on === 'GROSS PAY'): ?>
+                  <p><?php echo e($pension->pension_name); ?>: K<?php echo e(number_format($gross_earnings*($pension->pension/100),2)); ?></p>
+                    <?php 
                     $pension_value =  number_format($gross_earnings*($pension->pension/100),2);
-                    @endphp
+                    ?>
                  
-                  @endif  
-                  @if($pension->applied_on === 'BASIC PAY')
-                  <p>{{$pension->pension_name}}: K{{ number_format($basic_pay*($pension->pension/100),2) }}</p>
-                  @php 
+                  <?php endif; ?>  
+                  <?php if($pension->applied_on === 'BASIC PAY'): ?>
+                  <p><?php echo e($pension->pension_name); ?>: K<?php echo e(number_format($basic_pay*($pension->pension/100),2)); ?></p>
+                  <?php 
                     $pension_value =  number_format($basic_pay*($pension->pension/100),2);
-                    @endphp
-                  @endif  
+                    ?>
+                  <?php endif; ?>  
 
-                 @if($insurance->applied_on === 'GROSS PAY') 
-                  <p>{{$insurance->insurance_name}}: K{{ number_format($gross_earnings*($insurance->insurance/100),2) }}</p>
+                 <?php if($insurance->applied_on === 'GROSS PAY'): ?> 
+                  <p><?php echo e($insurance->insurance_name); ?>: K<?php echo e(number_format($gross_earnings*($insurance->insurance/100),2)); ?></p>
                  
-                  @php
+                  <?php
                  $insurance_value = number_format($gross_earnings*($insurance->insurance/100),2);
-                 @endphp
-                  @endif  
+                 ?>
+                  <?php endif; ?>  
                   
-                  @if($insurance->applied_on === 'BASIC PAY') 
-                  <p>{{$insurance->insurance_name}}: K{{ number_format($basic_pay*($insurance->insurance/100),2) }}</p>
-                  @php
+                  <?php if($insurance->applied_on === 'BASIC PAY'): ?> 
+                  <p><?php echo e($insurance->insurance_name); ?>: K<?php echo e(number_format($basic_pay*($insurance->insurance/100),2)); ?></p>
+                  <?php
                  $insurance_value = number_format($basic_pay*($insurance->insurance/100),2);
-                 @endphp
+                 ?>
                  
-                  @endif  
+                  <?php endif; ?>  
         
                   
 <!--Standard Deductions--> 
-@foreach($standard_deductions as $normal_deductions)
-@if($normal_deductions->amount != 0)
-                        <p>{{$normal_deductions->name}}: K{{$normal_deductions->amount}}</p>
-@endif
-@endforeach
+<?php $__currentLoopData = $standard_deductions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $normal_deductions): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<?php if($normal_deductions->amount != 0): ?>
+                        <p><?php echo e($normal_deductions->name); ?>: K<?php echo e($normal_deductions->amount); ?></p>
+<?php endif; ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 <!--End standard Deductions-->
 
 
   <!--Third Party Deductions-->                
                   
-                  @foreach($deductions as $deduction)
-@if($deduction->amount != 0)
-                        <p>{{$deduction->deduction_name}}: K{{$deduction->amount}}</p>
-@endif
-                        @endforeach
+                  <?php $__currentLoopData = $deductions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deduction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+<?php if($deduction->amount != 0): ?>
+                        <p><?php echo e($deduction->deduction_name); ?>: K<?php echo e($deduction->amount); ?></p>
+<?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <!--End Third Party Deductions-->
 
                         <!--Salary Advance Deductions-->
-                        @if($salary_advance)
-                        <p>Salary Advance: K{{number_format($salary_advance->emi,2)}}</p>    
+                        <?php if($salary_advance): ?>
+                        <p>Salary Advance: K<?php echo e(number_format($salary_advance->emi,2)); ?></p>    
                         <!--End Salary Advace Deductions-->                      
                         <div style="display: none;">
 
 
-@if($salary_advance->runMonth != date('F-Y',strtotime($payDay)))                        
-{{$salary_advance->update([
+<?php if($salary_advance->runMonth != date('F-Y',strtotime($payDay))): ?>                        
+<?php echo e($salary_advance->update([
   'duration' => ($salary_advance->duration - 1),
   'total_repayments' => ($salary_advance->emi +  $salary_advance->total_repayments),
   'runMonth' => date('F-Y',strtotime($payDay)) 
-  ])  
-}}
-@endif
+  ])); ?>
 
-@if($salary_advance->duration == 0)
-{{$salary_advance->update([
+<?php endif; ?>
+
+<?php if($salary_advance->duration == 0): ?>
+<?php echo e($salary_advance->update([
   'loan_status' => 4,
-  ])  
-}}
+  ])); ?>
 
-@endif
+
+<?php endif; ?>
 </div> 
-@endif
+<?php endif; ?>
               </td>
               <td width="25%" align="right">
-              @if($housing_allowance != 0)
-                <p>Housing: K{{$housing_allowance}}</p>
+              <?php if($housing_allowance != 0): ?>
+                <p>Housing: K<?php echo e($housing_allowance); ?></p>
                 
-                @endif
-                @if($transport_allowance != 0)
-                <p>Transport: K{{$transport_allowance}}</p>
+                <?php endif; ?>
+                <?php if($transport_allowance != 0): ?>
+                <p>Transport: K<?php echo e($transport_allowance); ?></p>
                 
-                @endif
+                <?php endif; ?>
 
-                @if($total_overtime_amount != 0)
-                <p>Overtime:K{{ number_format($total_overtime_amount,2) }}</p>
-                @endif
+                <?php if($total_overtime_amount != 0): ?>
+                <p>Overtime:K<?php echo e(number_format($total_overtime_amount,2)); ?></p>
+                <?php endif; ?>
 
 
-               @if($bonus_amount != 0)
-                <p>{{$bonus_name}}:K{{ number_format($bonus_amount,2) }}</p>
-                @endif
+               <?php if($bonus_amount != 0): ?>
+                <p><?php echo e($bonus_name); ?>:K<?php echo e(number_format($bonus_amount,2)); ?></p>
+                <?php endif; ?>
 
-                @if($achievements_amount != 0)
-                <p>{{$achievements_name}}:K{{ number_format($achievements_amount,2) }}</p>
-                @endif
+                <?php if($achievements_amount != 0): ?>
+                <p><?php echo e($achievements_name); ?>:K<?php echo e(number_format($achievements_amount,2)); ?></p>
+                <?php endif; ?>
 
 
 
@@ -311,13 +312,13 @@ else{
             <tr>
               <td></td>
               <td></td>
-              @if($salary_advance)
-              <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $pension_value + $insurance_value  + ($payee) + $salary_advance->emi,2) }} </td>
-              <td width="25%" align="right"><b>Gross Pay:</b> K{{ number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2) }}</td>
-           @else
-           <td width="25%" align="right"><b>Total:</b> {{ number_format($deduction_amount + $pension_value + $insurance_value + ($payee),2) }} </td>
-           <td width="25%" align="right"><b>Gross Pay:</b> K{{ number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2) }}</td>
-           @endif
+              <?php if($salary_advance): ?>
+              <td width="25%" align="right"><b>Total:</b> <?php echo e(number_format($deduction_amount + $pension_value + $insurance_value  + ($payee) + $salary_advance->emi,2)); ?> </td>
+              <td width="25%" align="right"><b>Gross Pay:</b> K<?php echo e(number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2)); ?></td>
+           <?php else: ?>
+           <td width="25%" align="right"><b>Total:</b> <?php echo e(number_format($deduction_amount + $pension_value + $insurance_value + ($payee),2)); ?> </td>
+           <td width="25%" align="right"><b>Gross Pay:</b> K<?php echo e(number_format(($basic_pay)+$housing_allowance + $transport_allowance+$total_overtime_amount + $bonus_amount + $achievements_amount,2)); ?></td>
+           <?php endif; ?>
 
             </tr>
 
@@ -326,19 +327,20 @@ else{
               <td></td>
               <td width="25%" align="right"><b>Net Pay:</b></td>
               <td width="25%" align="right"><b>
-              @if($salary_advance)
-                  K{{ number_format((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee) + $salary_advance->emi),2)}}
+              <?php if($salary_advance): ?>
+                  K<?php echo e(number_format((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee) + $salary_advance->emi),2)); ?>
+
                
-              @else   
-              K{{ number_format((($basic_pay) + $housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee)),2)}} 
-              @endif
+              <?php else: ?>   
+              K<?php echo e(number_format((($basic_pay) + $housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee)),2)); ?> 
+              <?php endif; ?>
                 </b></td>
             </tr>
           </table>
-          @if($salary_advance)
+          <?php if($salary_advance): ?>
 <!-- Insert Data in the Database--> 
 <div style="display: none;">
-{{\App\PayrollRecords::updateOrCreate([
+<?php echo e(\App\PayrollRecords::updateOrCreate([
     
     'security_number'   => Auth::user()->security_number,
     'monthYear'   => $monthYear,
@@ -354,14 +356,14 @@ else{
   'payee' =>  round($payee),
   'security_number' =>  Auth::user()->security_number,
   'net'=>((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee) + $salary_advance->emi)),  
-  ])
-}}
+  ])); ?>
+
 </div> 
-@else    
+<?php else: ?>    
 
 
 <div style="display: none;">
-{{\App\PayrollRecords::updateOrCreate([
+<?php echo e(\App\PayrollRecords::updateOrCreate([
     
     'security_number'   => Auth::user()->security_number,
     'monthYear'   => $monthYear,
@@ -378,15 +380,15 @@ else{
   'payee' =>  round($payee),
   'security_number' =>  Auth::user()->security_number,
   'net'=>((($basic_pay)+$housing_allowance + $transport_allowance +$total_overtime_amount + $bonus_amount + $achievements_amount) - ($deduction_amount +($pension_value) + ($insurance_value) + ($payee))),  
-  ])
-}}
+  ])); ?>
+
 </div>
 
 
 
 
 
-@endif
+<?php endif; ?>
 <!--End Insert Data--> 
 
           <hr>
@@ -397,4 +399,4 @@ else{
   </div>
 </body>
 
-</html>
+</html><?php /**PATH C:\xampp\htdocs\COMPANY\HUMAN-RESOURCE\resources\views/admin/payroll/export/toPDF.blade.php ENDPATH**/ ?>

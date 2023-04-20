@@ -152,7 +152,7 @@ foreach ($payslips as $payslip) {
 
 
 
-          $housing_allowance = Position::where('security_number', "=", Auth::user()->security_number)->where('id', "=", $payslip->position_id)->sum("housing_allowance");
+         $housing_allowance = Position::where('security_number', "=", Auth::user()->security_number)->where('id', "=", $payslip->position_id)->sum("housing_allowance");
          $transport_allowance = Position::where('security_number', "=", Auth::user()->security_number)->where('id', "=", $payslip->position_id)->sum("transport_allowance");
 
          $p1 = Tax::where('security_number',"=",Auth::user()->security_number)->first()->fbp;
@@ -170,6 +170,16 @@ foreach ($payslips as $payslip) {
          foreach ($payslip->overtimes as $ov) {
              $total_overtime_amount += (1.5 * $ov->rate_amount * ($ov->hour/60));
          }
+
+
+         $total_standard_deductions = 0;
+         $standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->get();
+         $total_standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->sum('amount');;
+         
+         
+
+
+
 
          $pension =\App\pension::where('security_number', "=", Auth::user()->security_number)->first();
          $insurance =\App\Insurance::where('security_number', "=", Auth::user()->security_number)->first();
@@ -261,8 +271,6 @@ $achievements_name = " ";
         'date'=> $request->date,
         'deduction_amount'=> ThirdPartyDeductions::where('security_number', "=", Auth::user()->security_number)->where('employee_id',"=",$payslip->employee_id)->whereDate('date',"=",$end_date)->sum("amount"),
         'deductions'=> ThirdPartyDeductions::where('security_number', "=", Auth::user()->security_number)->where('employee_id',"=",$payslip->employee_id)->whereDate('date',"=",$end_date)->get(),
-        'housing_allowance'=> Position::where('security_number', "=", Auth::user()->security_number)->where('id',"=",$payslip->position_id)->sum("housing_allowance"),
-        'transport_allowance'=> Position::where('security_number', "=", Auth::user()->security_number)->where('id',"=",$payslip->position_id)->sum("transport_allowance"),
         'salary_advance' => CashAdvance::where('security_number', "=", Auth::user()->security_number)->where('employee_id',"=",$payslip->id)->where('loan_status',"=",1)->first(),
         'monthYear' => date('F-Y', strtotime($end_date)),
         'paye_1st_lower_band' => $paye_1st_lower_band,
@@ -274,12 +282,13 @@ $achievements_name = " ";
         'paye_4th_lower_band' => $paye_4th_lower_band,
         'pension' => $pension,
         'insurance' => $insurance,
+        'standard_deductions' => $standard_deductions,
+        'total_standard_deductions' => $total_standard_deductions,
       
         'bonus_name' => !is_null($bonus) ? $bonus_name : 'N/A',
         'bonus_amount' => !is_null($bonus_amount) ? $bonus_amount : 0,
         'achievements_name' => !is_null($achievements_name) ? $achievements_name : 'N/A',
-        'achievements_amount' => !is_null($achievements_amount) ? $achievements_amount : 0,
-      
+        'achievements_amount' => !is_null($achievements_amount) ? $achievements_amount : 0,      
         'housing_allowance' => $housing_allowance,
         'transport_allowance' => $transport_allowance,
         'gross_earnings' => $gross_earnings,
