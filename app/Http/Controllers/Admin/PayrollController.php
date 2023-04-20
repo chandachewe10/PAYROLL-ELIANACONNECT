@@ -173,8 +173,9 @@ foreach ($payslips as $payslip) {
 
 
          $total_standard_deductions = 0;
-         $standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->get();
-         $total_standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->sum('amount');;
+         
+         $standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->get();   
+         $total_standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->sum('amount');;
          
          
 
