@@ -42,6 +42,10 @@ class Deduction extends Model
         $this->attributes['name'] = ucwords($value);
     }
 
+    public function setStartDateAttribute($value){
+        $this->attributes['start_date'] = date('Y-m-d',strtotime($value));
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

@@ -174,9 +174,30 @@ foreach ($payslips as $payslip) {
 
          $total_standard_deductions = 0;
          
-         $standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->get();   
-         $total_standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->sum('amount');;
+         //$standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->get();   
+         $standard_deductions = Deduction::where('security_number', auth()->user()->security_number)
+    ->where(function ($query) use ($payslip, $end_date) {
+        $query->where('employee_id', 1)
+            ->orWhere('employee_id', $payslip->employee_id);
+    })
+    ->where(function ($query) use ($end_date) {
+        $query->whereDate('start_date', $end_date)
+            ->orWhere('end_date', 'recurring');
+    })
+    ->get();
+
          
+         
+      //   $total_standard_deductions = Deduction::where('security_number',"=",auth()->user()->security_number)->where('employee_id',"=",1)->orWhere('employee_id',"=",$payslip->employee_id)->whereDate('start_date',"=",$end_date)->orWhereDate('end_date',"=",'recurring')->sum('amount');;
+    $total_standard_deductions =  Deduction::where('security_number', auth()->user()->security_number)
+    ->where(function ($query) use ($payslip, $end_date) {
+        $query->where('employee_id', 1)
+            ->orWhere('employee_id', $payslip->employee_id);
+    })
+    ->where(function ($query) use ($end_date) {
+        $query->whereDate('start_date', $end_date)
+            ->orWhere('end_date', 'recurring');
+    })->sum('amount');    
          
 
 

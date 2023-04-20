@@ -93,19 +93,17 @@ $employees = \App\Employee::where('security_number',"=",Auth::user()->security_n
 
                       
                         <div class="form-group">
-                          <label for="startDate">Start Date</label><small class="text-danger">*</small>
+                          <label for="startDate">Deduction Date</label><small class="text-danger">*</small>
                           <input type="text" class="form-control datetimepicker-input" name="start_date" id="start_date" data-toggle="datetimepicker" data-target="#start_date" autocomplete="off">
                           <small class="text-danger err" id="start_date-err"></small>
                         </div>
 
 
-                        <div class="form-group">
-                          <label for="endDate">End Date</label><small class="text-danger">*</small>
-                          <input type="text" class="form-control datetimepicker-input" name="end_date" id="end_date" data-toggle="datetimepicker" data-target="#end_date" autocomplete="off">
-                          <small class="text-danger err" id="end_date-err"></small>
-                          <small class="text-danger">The deductions shall be deducted between the start date and the end date</small>
-                        </div>
-
+    <div class="form-check">
+    <input type="checkbox" value="recurring" class="form-check-input" name="end_date" value="1" >
+    <label class="form-check-label" for="recurring">Recurring</label>
+    </div>
+    <br><br>
                         
 
 

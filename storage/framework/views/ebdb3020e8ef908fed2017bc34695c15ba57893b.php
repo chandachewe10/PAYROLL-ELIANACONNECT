@@ -17,6 +17,8 @@
         <th width="10" class="text-center">Amount</th>
         <th width="10" class="text-center">Duration</th>
         <th width="45">Description</th>
+        <th width="45">Date</th>
+        <th width="45">Status</th>
         <th width="5">Actions</th>
         <th width="3">
           <div class="custom-control custom-checkbox pl-1 align-self-center">
@@ -56,6 +58,12 @@
           <p><?php echo e($deduction->description); ?></p>
         </td>
         <td>
+          <p><?php echo e(date('d, F-Y',strtotime($deduction->start_date))); ?></p>
+        </td>
+        <td>
+          <p><?php echo e($deduction->end_date); ?></p>
+        </td>
+        <td>
             <div class="btn-group btn-sm" role="group" aria-label="Basic example">
               <a href="<?php echo e(route('admin.admindeduction.edit',['admindeduction'=>$deduction])); ?>" type="button" class="btn btn-sm btn-outline-primary">
                 <i class="ik edit-2 ik-edit-2"></i>
@@ -65,6 +73,7 @@
               </a>
             </div>
         </td>
+       
         <td>
           <div class="custom-control custom-checkbox pl-1 align-self-center">
             <label class="custom-control custom-checkbox mb-0">
