@@ -2,7 +2,7 @@
 
 ### Introduction
 ---
-The Elian Connect Payroll System gives you a huge head start on any web application of any sort. It comes with a full-featured access control system that is simple to use right out of the box. 
+The Eliana Connect Payroll System gives you a huge head start on any web application of any sort. It comes with a full-featured access control system that is simple to use right out of the box. 
 
 
 ### Setup
